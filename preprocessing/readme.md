@@ -47,11 +47,13 @@ save_processed_data(X,y,'output_dir', 'prefix')
 `uv` users:
 ```sh
 foo@bar:~$ uv venv
-foo@bar:~$ uv pip install .
+foo@bar:~$ source .venv/bin/activate  # (or .\.venv\Scripts\activate on Windows)
+foo@bar:~$ uv pip install .[test]
 
 ```
 `pip`:
 ```sh
 foo@bar:~$ python3 -m venv .venv
-foo@bar:~$  pip install .
+foo@bar:~$ source .venv/bin/activate  # (or .\.venv\Scripts\activate on Windows)
+foo@bar:~$ pip install .[test]
 ```
