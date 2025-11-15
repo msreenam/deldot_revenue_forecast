@@ -2,9 +2,10 @@ import pandas as pd
 import os
 
 
-def load_data(file_path: str) -> pd.DataFrame:
-    """Loads a CSV file into a pandas DataFrame."""
-    if os.path.exists(file_path):
-        return pd.read_csv(file_path)
-    else:
-        raise FileNotFoundError(f"The file {file_path} does not exist.")
+def save_processed_data(X_df: pd.DataFrame, y_series: pd.Series, output_dir: str, prefix: str):
+    """Saves the processed features and target to CSV."""
+    if not os.path.exists(output_dir):
+        os.makedirs(output_dir)
+    
+    X_df.to_csv(os.path.join(output_dir, f"{prefix}_features.csv"), index=False)
+    y_series.to_csv(os.path.join(output_dir, f"{prefix}_target.csv"), index=False)
