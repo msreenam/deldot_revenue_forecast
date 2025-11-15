@@ -46,12 +46,12 @@ save_processed_data(X,y,'output_dir', 'prefix')
 # For Developers
 `uv` users:
 ```sh
-foo@bar:~$ uv venv.
+foo@bar:~$ uv venv
 foo@bar:~$ uv pip install .
 
 ```
 `pip`:
 ```sh
-foo@bar:~$ python3 -m venv .venv.
+foo@bar:~$ python3 -m venv .venv
 foo@bar:~$  pip install .
 ```
