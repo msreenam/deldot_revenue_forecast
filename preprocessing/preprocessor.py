@@ -23,6 +23,8 @@ class DataPreprocessor:
         """
         Fits the preprocessor by learning the imputation strategies,
         scaling parameters, and encoding categories from the data.
+
+        **Do not fit the testing data**
         
         Args:
             X: The training features (pd.DataFrame).
@@ -63,7 +65,7 @@ class DataPreprocessor:
         Transforms the data using the already-fitted preprocessor.
         
         Args:
-            X: The data to transform (pd.DataFrame).
+            X: The Dataframe
         """
         if self.preprocessor_ is None:
             raise NotFittedError("This DataPreprocessor instance is not fitted yet. "
@@ -71,12 +73,10 @@ class DataPreprocessor:
     
         X_processed = self.preprocessor_.transform(X)
         if isinstance(X_processed, spmatrix):
-            X_processed_dense = X_processed.toarray()
-        else:
-            X_processed_dense = X_processed
+            X_processed = X_processed.todense()
         
         # Return a DataFrame with the correct feature names
-        return pd.DataFrame( X_processed_dense,  columns=self.feature_names_out_, index=X.index)
+        return pd.DataFrame( X_processed,  columns=self.feature_names_out_, index=X.index)
 
     def fit_transform(self, X: pd.DataFrame) -> pd.DataFrame:
         """
@@ -87,12 +87,3 @@ class DataPreprocessor:
         """
         self.fit(X)
         return self.transform(X)
-
-# Entry point for the script
-if __name__ == "__main__":
-    # Specify input CSV file, target column, and output directory
-    input_file = "data.csv"  # Change to your data file path
-    target_column = "Purchased"  # Change to your target column
-    output_dir = "output"  # Change to your desired output folder
-
-    main(input_file, target_column, output_dir)
