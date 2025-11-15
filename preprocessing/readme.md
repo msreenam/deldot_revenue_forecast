@@ -22,6 +22,18 @@ For larger datasets (50G, 100G, ...) we would need to parallelize the pipeline a
 
 
 # How to Use
+`uv` users:
+```sh
+foo@bar:~$ uv venv
+foo@bar:~$ source .venv/bin/activate  # (or .\.venv\Scripts\activate on Windows)
+foo@bar:~$ uv pip install .
+```
+`pip`:
+```sh
+foo@bar:~$ python3 -m venv .venv
+foo@bar:~$ source .venv/bin/activate  # (or .\.venv\Scripts\activate on Windows)
+foo@bar:~$ pip install .
+```
 1. Import the package into your file:
 ```py
 from preprocessing.preprocessor import DataPreprocessor
@@ -49,7 +61,6 @@ save_processed_data(X,y,'output_dir', 'prefix')
 foo@bar:~$ uv venv
 foo@bar:~$ source .venv/bin/activate  # (or .\.venv\Scripts\activate on Windows)
 foo@bar:~$ uv pip install .[test]
-
 ```
 `pip`:
 ```sh
