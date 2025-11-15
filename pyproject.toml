@@ -1,0 +1,23 @@
+[project]
+name = "preprocessor"
+version = "0.1.0"
+description = "A package to preprocess data for ML models."
+
+dependencies = [
+    "pandas>=2.3.3",
+    "scikit-learn>=1.7.2",
+    "scipy>= 1.15.3" 
+]
+
+[tool.setuptools]
+packages = ["preprocessing"]
+
+[tool.pyright]
+venvPath = "."
+venv = ".venv"
+
+[project.optional-dependencies]
+
+test = [
+    "pytest"
+]
