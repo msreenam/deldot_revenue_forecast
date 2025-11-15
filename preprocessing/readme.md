@@ -28,18 +28,17 @@ from preprocessing.preprocessor import DataPreprocessor
 from preprocessing.utils.load_data import load_data
 from preprocessing.utils.save_to_file import save_processed_data
 
+#initialize the object
 preprocessor = DataPreprocessor()
 
 ```
 
-2. TBD: load your data, split data. then use the fit in DataPreprocessor
+2. Loading data
 ```py
-# 1. Change this to your file's path
-input_file = "my_data.csv"
-
-# 2. Change this to your target's column name
-target_column = "NameOfYourTargetColumn"
-
-# 3. Change this to your desired output folder
-output_dir = "output"
+df = load_data("my_data.csv")#file path to csv
+```
+3. Saving output to files
+`save_processed_data` takes `X: pd.Dataframe`, `y : pd.Series`, `output:str`, `prefix:str`
+```py
+save_processed_data(X,y,'output_dir', 'prefix')
 ```
