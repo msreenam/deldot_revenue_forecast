@@ -1,7 +1,7 @@
 import pandas as pd
 import os
 
-from exception import UnsupportedFileFormatError
+from .exception import UnsupportedFileFormatError
 
 
 def load_data(file_path: str) -> pd.DataFrame:
