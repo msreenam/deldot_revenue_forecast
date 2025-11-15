@@ -27,9 +27,12 @@ For larger datasets (50G, 100G, ...) we would need to parallelize the pipeline a
 from preprocessing.preprocessor import DataPreprocessor
 from preprocessing.utils.load_data import load_data
 from preprocessing.utils.save_to_file import save_processed_data
+
+preprocessor = DataPreprocessor()
+
 ```
 
-2. Import the package into your file:
+2. TBD: load your data, split data. then use the fit in DataPreprocessor
 ```py
 # 1. Change this to your file's path
 input_file = "my_data.csv"
@@ -39,6 +42,4 @@ target_column = "NameOfYourTargetColumn"
 
 # 3. Change this to your desired output folder
 output_dir = "output"
-
-main(input_file, target_column, output_dir)
 ```
