@@ -1,0 +1,11 @@
+[project]
+name = "preprocessor"
+version = "0.1.0"
+dependencies = [
+	"scikit-learn",
+        "pandas",
+]
+
+[tool.pyright]
+venvPath = "."
+venv = ".venv"
