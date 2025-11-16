@@ -60,7 +60,7 @@ save_processed_data(X,y,'output_dir', 'prefix')
 ```sh
 foo@bar:~$ uv venv
 foo@bar:~$ source .venv/bin/activate  # (or .\.venv\Scripts\activate on Windows)
-foo@bar:~$ uv pip install .[test]
+foo@bar:~$ uv pip install -e .[test]
 ```
 `pip`:
 ```sh
