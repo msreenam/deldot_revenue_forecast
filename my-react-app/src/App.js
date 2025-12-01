@@ -1,24 +1,30 @@
-import logo from './logo.svg';
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import './App.css';
+import Overview from './components/Overview';
+import DataPage from './components/DataPage';
+import Forecasting from './components/Forecasting';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <div className="App">
+        <div className="sidebar">
+          <h3>DMV Dashboard</h3>
+          <Link to="/">Overview</Link>
+          <Link to="/data">Data Sources</Link>
+          <Link to="/forecasting">Forecasting</Link>
+        </div>
+
+        <div className="content">
+          <Routes>
+            <Route path="/" element={<Overview />} />
+            <Route path="/data" element={<DataPage />} />
+            <Route path="/forecasting" element={<Forecasting />} />
+          </Routes>
+        </div>
+      </div>
+    </Router>
   );
 }
 
