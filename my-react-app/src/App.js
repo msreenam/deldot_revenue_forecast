@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, NavLink } from 'react-router-dom';
 import './App.css';
 import Overview from './components/Overview';
 import DataPage from './components/DataPage';
@@ -11,9 +11,28 @@ function App() {
       <div className="App">
         <div className="sidebar">
           <h3>DMV Dashboard</h3>
-          <Link to="/">Overview</Link>
-          <Link to="/data">Data Sources</Link>
-          <Link to="/forecasting">Forecasting</Link>
+          <NavLink 
+  to="/" 
+  end
+  className={({ isActive }) => isActive ? "active-link" : "sidebar-link"}
+>
+  Overview
+</NavLink>
+
+<NavLink 
+  to="/data"
+  className={({ isActive }) => isActive ? "active-link" : "sidebar-link"}
+>
+  Data Sources
+</NavLink>
+
+<NavLink 
+  to="/forecasting"
+  className={({ isActive }) => isActive ? "active-link" : "sidebar-link"}
+>
+  Forecasting
+</NavLink>
+
         </div>
 
         <div className="content">
