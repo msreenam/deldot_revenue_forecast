@@ -6,6 +6,10 @@ import DataPage from './components/DataPage';
 import Forecasting from './components/Forecasting';
 
 function App() {
+  const handleLogin = () => {
+    window.alert("Warning: Login is not yet implemented.");
+  };
+
   return (
     <Router>
       <div className="App">
@@ -19,7 +23,6 @@ function App() {
               end
               className={({ isActive }) => isActive ? "nav-link active-link" : "nav-link"}
             >
-              {/* <span className="nav-icon">🏠</span> */}
               <span className="nav-text">Overview</span>
             </NavLink>
 
@@ -27,7 +30,6 @@ function App() {
               to="/data"
               className={({ isActive }) => isActive ? "nav-link active-link" : "nav-link"}
             >
-              {/* <span className="nav-icon">📁</span> */}
               <span className="nav-text">Data Sources</span>
             </NavLink>
 
@@ -35,13 +37,18 @@ function App() {
               to="/forecasting"
               className={({ isActive }) => isActive ? "nav-link active-link" : "nav-link"}
             >
-              {/* <span className="nav-icon">📈</span> */}
               <span className="nav-text">Forecasting</span>
             </NavLink>
           </nav>
         </div>
 
         <div className="main-wrapper">
+          <div className="top-bar">
+            <button className="login-btn" onClick={handleLogin}>
+              Log In
+            </button>
+          </div>
+
           <div className="content">
             <Routes>
               <Route path="/" element={<Overview />} />
