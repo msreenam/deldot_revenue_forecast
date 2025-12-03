@@ -36,7 +36,7 @@ function Overview() {
 
       {/* What's in This Dashboard */}
       <div className="overview-description">
-        <h3>📊 What's in This Dashboard</h3>
+        <h3>What's in This Dashboard</h3>
         <p>
           This comprehensive tool integrates internal DMV metrics with external macroeconomic factors to provide accurate revenue analysis and forecasting.
         </p>
@@ -49,7 +49,7 @@ function Overview() {
 
       {/* Key Insights */}
       <div className="insights-section">
-        <h3>💡 Key Insights</h3>
+        <h3>Key Insights</h3>
         <ul>
           <li>Historical revenue shows seasonal patterns with peaks in Q1 and Q4</li>
           <li>External economic factors (unemployment, fuel costs) directly impact revenue streams</li>
@@ -61,7 +61,7 @@ function Overview() {
 
       {/* About Section */}
       <div className="about-section">
-        <h3>ℹ️ About This Project</h3>
+        <h3>About This Project</h3>
         <p>
           Developed by DelDot Team 1, Computer Science Senior Design Project, UD (2025). This dashboard provides real-time insights into DMV revenue streams and forecasting models, enabling data-driven fiscal planning and resource allocation for state programs and infrastructure projects.
         </p>
