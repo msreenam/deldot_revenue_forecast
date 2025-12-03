@@ -1,5 +1,7 @@
 .data-page {
-  padding: 10px;
+  padding: 18px 8px 36px 8px;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 /* Page title + intro */
@@ -18,7 +20,8 @@
 
 /* Sections */
 .data-section {
-  margin-bottom: 32px;
+  margin-bottom: 44px;
+  padding-bottom: 8px;
 }
 
 .data-section h3 {
@@ -48,19 +51,20 @@
 .charts-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 16px;
+  gap: 20px;
+  align-items: start;
 }
 
 /* Chart card */
 .chart-card {
   background: #ffffff;
-  border-radius: 8px;
+  border-radius: 12px;
   border: 1px solid #e5e7eb;
-  padding: 12px;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+  padding: 14px;
+  box-shadow: 0 6px 18px rgba(17,24,39,0.06);
   display: flex;
   flex-direction: column;
-  height: 260px; /* enough space for title + chart */
+  min-height: 260px; /* enough space for title + chart */
 }
 
 .chart-title {
@@ -72,11 +76,26 @@
 
 /* Make canvas fill the card area */
 .chart-body {
-  flex: 1;
+  flex: 1 1 auto;
   position: relative;
+  min-height: 160px;
 }
 
 .chart-body canvas {
+  display: block;
   width: 100% !important;
   height: 100% !important;
+}
+
+/* Larger screens: force 2 columns to create a 2x2 layout when possible */
+@media (min-width: 980px) {
+  .charts-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+  }
+}
+
+/* Extra spacing to ensure next section cannot overlap */
+.data-section + .data-section {
+  margin-top: 18px;
 }
