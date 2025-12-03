@@ -10,37 +10,48 @@ function App() {
     <Router>
       <div className="App">
         <div className="sidebar">
-          <h3>DMV Dashboard</h3>
-          <NavLink 
-  to="/" 
-  end
-  className={({ isActive }) => isActive ? "active-link" : "sidebar-link"}
->
-  Overview
-</NavLink>
+          <div className="sidebar-header">
+            <h2 className="sidebar-title">DMV Dashboard</h2>
+          </div>
+          <nav className="sidebar-nav">
+            <NavLink 
+              to="/" 
+              end
+              className={({ isActive }) => isActive ? "nav-link active-link" : "nav-link"}
+            >
+              {/* <span className="nav-icon">🏠</span> */}
+              <span className="nav-text">Overview</span>
+            </NavLink>
 
-<NavLink 
-  to="/data"
-  className={({ isActive }) => isActive ? "active-link" : "sidebar-link"}
->
-  Data Sources
-</NavLink>
+            <NavLink 
+              to="/data"
+              className={({ isActive }) => isActive ? "nav-link active-link" : "nav-link"}
+            >
+              {/* <span className="nav-icon">📁</span> */}
+              <span className="nav-text">Data Sources</span>
+            </NavLink>
 
-<NavLink 
-  to="/forecasting"
-  className={({ isActive }) => isActive ? "active-link" : "sidebar-link"}
->
-  Forecasting
-</NavLink>
-
+            <NavLink 
+              to="/forecasting"
+              className={({ isActive }) => isActive ? "nav-link active-link" : "nav-link"}
+            >
+              {/* <span className="nav-icon">📈</span> */}
+              <span className="nav-text">Forecasting</span>
+            </NavLink>
+          </nav>
         </div>
 
-        <div className="content">
-          <Routes>
-            <Route path="/" element={<Overview />} />
-            <Route path="/data" element={<DataPage />} />
-            <Route path="/forecasting" element={<Forecasting />} />
-          </Routes>
+        <div className="main-wrapper">
+          <div className="content">
+            <Routes>
+              <Route path="/" element={<Overview />} />
+              <Route path="/data" element={<DataPage />} />
+              <Route path="/forecasting" element={<Forecasting />} />
+            </Routes>
+          </div>
+          <footer className="app-footer">
+            <p>© 2025 Delaware Department of Transportation · Data Analytics Division</p>
+          </footer>
         </div>
       </div>
     </Router>

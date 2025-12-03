@@ -1,62 +1,196 @@
-.overview {
-  padding: 10px;
+:root {
+  --primary-blue: #003366;
+  --gold: #FFCC00;
+  --light-gray: #F3F4F6;
+  --border-gray: #E5E7EB;
+  --text-dark: #1F2937;
+  --text-light: #6B7280;
 }
 
-/* Title */
+.overview {
+  animation: fadeIn 0.3s ease-in;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* HEADER SECTION */
 .overview-title {
-  font-size: 1.8rem;
-  margin-bottom: 8px;
-  color: #1f2937;
+  font-size: 2.2rem;
+  font-weight: 700;
+  margin-bottom: 12px;
+  color: var(--text-dark);
+  letter-spacing: -0.5px;
 }
 
 .overview-subtitle {
-  font-size: 1rem;
-  color: #4b5563;
-  margin-bottom: 20px;
+  font-size: 1.05rem;
+  color: var(--text-light);
+  margin-bottom: 32px;
+  line-height: 1.6;
+  max-width: 800px;
 }
 
-/* Metrics Grid */
+/* METRICS GRID */
 .metrics-container {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  gap: 16px;
-  margin-bottom: 24px;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 20px;
+  margin-bottom: 48px;
 }
 
 .metric-card {
   background: white;
-  border: 1px solid #e5e7eb;
-  border-radius: 8px;
-  padding: 18px;
+  border: 1px solid var(--border-gray);
+  border-radius: 12px;
+  padding: 28px 24px;
   text-align: center;
-  box-shadow: 0px 1px 3px rgba(0,0,0,0.08);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.metric-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--primary-blue), var(--gold));
+}
+
+.metric-card:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  transform: translateY(-2px);
+  border-color: var(--gold);
 }
 
 .metric-value {
-  font-size: 1.6rem;
-  font-weight: bold;
-  color: #111827;
-  margin: 0;
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: var(--primary-blue);
+  margin: 0 0 8px 0;
+  letter-spacing: -0.5px;
 }
 
 .metric-label {
-  margin-top: 6px;
-  color: #6b7280;
-  font-size: 0.9rem;
+  margin-top: 8px;
+  color: var(--text-light);
+  font-size: 0.95rem;
+  font-weight: 500;
+  line-height: 1.4;
 }
 
-/* Description section */
+/* DESCRIPTION SECTION */
+.overview-description {
+  background: white;
+  border: 1px solid var(--border-gray);
+  border-radius: 12px;
+  padding: 32px;
+  margin-bottom: 32px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+}
+
+.overview-description h3 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--text-dark);
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
 .overview-description p {
-  color: #374151;
-  margin-bottom: 8px;
+  color: var(--text-light);
+  margin-bottom: 16px;
+  line-height: 1.6;
+  font-size: 0.95rem;
 }
 
 .overview-description ul {
-  margin: 0;
-  padding-left: 20px;
-  color: #4b5563;
+  margin: 12px 0 0 0;
+  padding-left: 24px;
+  color: var(--text-light);
 }
 
 .overview-description li {
-  margin-bottom: 6px;
+  margin-bottom: 10px;
+  line-height: 1.6;
+  font-size: 0.95rem;
+}
+
+/* INSIGHTS SECTION */
+.insights-section {
+  background: linear-gradient(135deg, rgba(0, 51, 102, 0.08), rgba(255, 204, 0, 0.08));
+  border: 1px solid var(--border-gray);
+  border-radius: 12px;
+  padding: 32px;
+  margin-top: 32px;
+}
+
+.insights-section h3 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--primary-blue);
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.insights-section ul {
+  list-style: none;
+  padding: 0;
+}
+
+.insights-section li {
+  color: var(--text-light);
+  margin-bottom: 12px;
+  padding-left: 24px;
+  position: relative;
+  line-height: 1.5;
+  font-size: 0.95rem;
+}
+
+.insights-section li::before {
+  content: '▪';
+  color: var(--gold);
+  font-weight: bold;
+  position: absolute;
+  left: 0;
+}
+
+/* ABOUT SECTION */
+.about-section {
+  background: white;
+  border: 1px solid var(--border-gray);
+  border-radius: 12px;
+  padding: 28px;
+  margin-top: 32px;
+  border-left: 4px solid var(--gold);
+}
+
+.about-section h3 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--primary-blue);
+  margin-bottom: 12px;
+}
+
+.about-section p {
+  color: var(--text-light);
+  font-size: 0.9rem;
+  line-height: 1.6;
+  margin: 0;
 }
