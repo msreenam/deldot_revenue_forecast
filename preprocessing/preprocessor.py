@@ -7,8 +7,43 @@ from sklearn.impute import SimpleImputer
 from sklearn.compose import ColumnTransformer
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import OneHotEncoder
+from sklearn.base import BaseEstimator, TransformerMixin
 import os
 
+class DateFeatureExtractor(BaseEstimator, TransformerMixin):
+    """
+    Extracts Year, Month, Day, DayOfWeek from date columns.
+    Does not mutate the original DataFrame.
+    """
+    def fit(self, X, y=None):
+        # Store input feature names to support get_feature_names_out
+        self.feature_names_in_ = list(X.columns) if hasattr(X, "columns") else [f"x{i}" for i in range(X.shape[1])]
+        return self
+
+    def transform(self, X):
+        # Ensure input is a DataFrame
+        if not isinstance(X, pd.DataFrame):
+            X = pd.DataFrame(X, columns=self.feature_names_in_)
+
+        # List to hold the new feature DataFrames
+        output_dfs = []
+        
+        for col in self.feature_names_in_:
+            dt_series = pd.to_datetime(X[col], errors='coerce').dt
+            
+        
+            output_dfs.append(pd.DataFrame({
+                f"{col}_year": dt_series.year,
+                f"{col}_month": dt_series.month,
+                f"{col}_day": dt_series.day,
+                f"{col}_dow": dt_series.dayofweek
+            }, index=X.index))
+            
+        return pd.concat(output_dfs, axis=1)
+
+    def get_feature_names_out(self, input_features=None):
+        attrs = ["year", "month", "day", "dow"]
+        return [f"{col}_{attr}" for col in self.feature_names_in_ for attr in attrs]
 
 class DataPreprocessor:
 
@@ -30,8 +65,19 @@ class DataPreprocessor:
             X: The training features (pd.DataFrame).
         """
         self.numeric_features_ = X.select_dtypes(include=["int64", "float64"]).columns.tolist()
-        self.categorical_features_ = X.select_dtypes(include=["object"]).columns.tolist()
+        self.datetime_features_ = X.select_dtypes(include=["datetime64", "datetimetz"]).columns.tolist()
+        self.categorical_features_ = []
 
+        object_cols = X.select_dtypes(include=["object"]).columns
+        
+        for col in object_cols:
+            try:
+                pd.to_datetime(X[col], errors='raise')
+                self.datetime_features_.append(col)
+                
+            except (ValueError, TypeError):         
+                self.categorical_features_.append(col)
+                
         numeric_pipeline = Pipeline(
             steps=[
                 ("imputer", SimpleImputer(strategy="mean")),
@@ -46,10 +92,17 @@ class DataPreprocessor:
             ]
         )
 
+        date_pipeline = Pipeline(steps=[
+            ("extractor", DateFeatureExtractor()), 
+            ("imputer", SimpleImputer(strategy="median")), 
+            ("scaler", StandardScaler())
+        ])
+
         preprocessor = ColumnTransformer(
             transformers=[
                 ("num", numeric_pipeline, self.numeric_features_),
                 ("cat", categorical_pipeline, self.categorical_features_),
+                ("date", date_pipeline, self.datetime_features_),
             ],
             remainder="passthrough" # Keep any columns not specified
         )
