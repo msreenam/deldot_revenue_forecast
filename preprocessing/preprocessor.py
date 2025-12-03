@@ -76,7 +76,7 @@ class DataPreprocessor:
             X_processed = X_processed.todense()
         
         # Return a DataFrame with the correct feature names
-        return pd.DataFrame( X_processed,  columns=self.feature_names_out_, index=X.index)
+        return pd.DataFrame(X_processed,  columns=self.feature_names_out_, index=X.index)
 
     def fit_transform(self, X: pd.DataFrame) -> pd.DataFrame:
         """
