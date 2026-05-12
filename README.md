@@ -273,6 +273,3 @@ The Python components can be deployed as:
 - Ensure existing tests still pass
 - Test both frontend and backend components
 
----
-
-For questions or support, please contact the development team or create an issue in the repository.
