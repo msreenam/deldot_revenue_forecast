@@ -2,8 +2,8 @@ import { Scenario, YearlyRevenue, DE_COUNTIES, PolicyMechanism } from '../types/
 import { RawVehicleRecord } from '../types/data';
 
 const INFLATION_RATE = 0.025;
-const VEHICLE_GROWTH = 0.007;
-const VMT_GROWTH = 0.009; // Updated based on 2025 FHWA Traffic Volume Trends (+0.9% cumulative)
+const VEHICLE_GROWTH = 0.007; // 0.7% annual personal vehicle growth
+const VMT_GROWTH = 0.006; // 0.6% annual statewide VMT growth
 const SCRAPPAGE_RATE = 0.045;
 
 /**
@@ -132,13 +132,14 @@ export function calculateRevenue(scenario: Scenario): YearlyRevenue[] {
           revenue = totalVehicles * 0.15 * rate; // 15% heavy vehicles
           break;
         case 'REG_FEE_EV_SURCHARGE':
-          revenue = currentEvFleet * rate;
+          // Exempt MBUF enrollees from engine-type surcharges
+          revenue = scenario.mechanisms.some(m => m.id === 'MBUF_LIGHT' && m.enabled) ? 0 : currentEvFleet * rate;
           break;
         case 'REG_FEE_PHEV_SURCHARGE':
-          revenue = totalVehicles * 0.05 * rate; // 5% PHEV assumption
+          revenue = scenario.mechanisms.some(m => m.id === 'MBUF_LIGHT' && m.enabled) ? 0 : totalVehicles * 0.05 * rate; // 5% PHEV assumption
           break;
         case 'REG_FEE_HYBRID_SURCHARGE':
-          revenue = totalVehicles * 0.10 * rate; // 10% Hybrid assumption
+          revenue = scenario.mechanisms.some(m => m.id === 'MBUF_LIGHT' && m.enabled) ? 0 : totalVehicles * 0.10 * rate; // 10% Hybrid assumption
           break;
         case 'REG_FEE_VALUE_BASED':
           revenue = totalVehicles * 35000 * rate; // Avg value $35k
