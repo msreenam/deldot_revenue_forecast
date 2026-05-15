@@ -53,6 +53,8 @@ export default function Dashboard({ user, onLogout }: DashboardProps) {
 
   const results = useMemo(() => calculateRevenue(scenario), [scenario]);
   const currentYearData = results.find(r => r.year === selectedYear) || results[0];
+  const gisYear = 2050;
+  const gisYearData = results.find(r => r.year === gisYear) || results[results.length - 1];
 
   const handleMechanismChange = (mechanisms: any) => {
     setScenario(prev => ({ ...prev, mechanisms }));
@@ -368,8 +370,8 @@ export default function Dashboard({ user, onLogout }: DashboardProps) {
               {activeTab === 'GIS' && (
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                   <DelawareMap 
-                    data={currentYearData.countyImpacts} 
-                    title={`Avg Cost Per Vehicle (${selectedYear})`} 
+                    data={gisYearData.countyImpacts} 
+                    title={`Avg Cost Per Vehicle by County (2050)`} 
                   />
                   <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
                     <div className="flex items-center justify-between mb-4">
