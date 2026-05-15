@@ -65,6 +65,35 @@ export default function Dashboard({ user, onLogout }: DashboardProps) {
     setTimeout(() => setFeedback(null), 3000);
   };
 
+  // NEW INTERCEPT HANDLER LOGIC PIPELINE
+  const handleToggleRemoveExisting = (checked: boolean) => {
+    if (checked) {
+      // Isolate baseline mechanism calculations
+      setScenario(s => ({ ...s, removeExisting: true }));
+    } else {
+      // Intercept the close action state with a warning choice option
+      const wantToSave = window.confirm(
+        "Would you like to save this isolation scenario configuration setup before clearing out changes?"
+      );
+
+      if (wantToSave) {
+        handleSave();
+        setScenario(s => ({ ...s, removeExisting: false }));
+      } else {
+        // Drop the current parameters out completely and assign a fresh UUID profile configuration block
+        setScenario({
+          id: generateScenarioId(),
+          name: 'Default Scenario',
+          mechanisms: INITIAL_MECHANISMS,
+          removeExisting: false,
+          viewMode: scenario.viewMode
+        });
+        setFeedback("Workspace cleared. New baseline calculation tracks generated.");
+        setTimeout(() => setFeedback(null), 3000);
+      }
+    }
+  };
+
   const handleImport = () => {
     if (importId) {
       setFeedback(`Imported scenario ${importId}`);
@@ -208,10 +237,11 @@ export default function Dashboard({ user, onLogout }: DashboardProps) {
             </div>
             <div className="flex items-center gap-3">
               <label className="flex items-center gap-2 cursor-pointer">
+                {/* CONNECTED TO THE NEW EVENT PIPELINE ACTION */}
                 <input 
                   type="checkbox" 
                   checked={scenario.removeExisting}
-                  onChange={(e) => setScenario(s => ({...s, removeExisting: e.target.checked}))}
+                  onChange={(e) => handleToggleRemoveExisting(e.target.checked)}
                   className="w-4 h-4 accent-[#004a99]"
                 />
                 <span className="text-xs font-bold text-gray-600">Remove Existing Revenue</span>
