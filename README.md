@@ -140,12 +140,22 @@ APP_URL=http://localhost:3000
 
 ```
 deldot_revenue_forecast/
-├── pyproject.toml                 # Python project configuration
-├── README.md                      # This file
-├── External_Data/                 # External data sources
+├── .gitignore                    # Git ignore rules
+├── pyproject.toml                # Python project configuration
+├── README.md                     # This file
+├── External_Data/                # External data sources
 │   └── TOTALSA.csv               # Vehicle sales data
 ├── frontend_deldot/              # React frontend application
+│   ├── .env.example              # Environment variables template
+│   ├── .gitignore                # Frontend ignore rules
+│   ├── index.html                # Vite app entry HTML
+│   ├── metadata.json             # AI Studio metadata and app config
+│   ├── package-lock.json         # Locked dependency versions
+│   ├── package.json              # Node.js dependencies and scripts
+│   ├── tsconfig.json             # TypeScript compiler settings
+│   ├── vite.config.ts            # Vite configuration
 │   ├── src/
+│   │   ├── App.tsx               # Main application component
 │   │   ├── components/           # React components
 │   │   │   ├── Dashboard.tsx     # Main dashboard
 │   │   │   ├── DelawareMap.tsx   # Geographic visualizations
@@ -153,30 +163,27 @@ deldot_revenue_forecast/
 │   │   │   ├── ReportView.tsx    # Report generation
 │   │   │   └── RevenueChart.tsx  # Revenue visualizations
 │   │   ├── types/                # TypeScript type definitions
-│   │   │   ├── data.ts          # Data interfaces
-│   │   │   └── policy.ts        # Policy-related types
-│   │   ├── utils/               # Utility functions
-│   │   │   └── data.ts          # Data processing utilities
-│   │   └── App.tsx              # Main application component
-│   ├── package.json              # Node.js dependencies
-│   ├── vite.config.ts           # Vite configuration
-│   └── .env.example             # Environment variables template
+│   │   │   ├── data.ts           # Data interfaces
+│   │   │   └── policy.ts         # Policy-related types
+│   │   ├── utils/                # Utility functions
+│   │   │   └── data.ts           # Data processing utilities
+│   │   └── index.css             # Global styles
 ├── Model/                        # Machine learning models
-│   └── DelDot1.py               # Main forecasting model
+│   └── DelDot1.py                # Main forecasting model
 ├── preprocessing/                # Data preprocessing package
 │   ├── __init__.py
-│   ├── preprocessor.py          # Main preprocessing class
-│   ├── readme.md                # Preprocessing documentation
-│   ├── tests/                   # Unit tests
+│   ├── preprocessor.py           # Main preprocessing class
+│   ├── readme.md                 # Preprocessing documentation
+│   ├── tests/                    # Unit tests
 │   │   ├── __init__.py
 │   │   ├── preprocessor_test.py
 │   │   └── utils_test.py
-│   └── utils/                   # Preprocessing utilities
+│   └── utils/                    # Preprocessing utilities
 │       ├── __init__.py
-│       ├── exception.py         # Custom exceptions
-│       ├── load_data.py         # Data loading functions
-│       └── save_to_file.py      # Data export functions
-└── my-react-app/                # Legacy React application (deprecated)
+│       ├── exception.py          # Custom exceptions
+│       ├── load_data.py          # Data loading functions
+│       └── save_to_file.py       # Data export functions
+└── my-react-app/                 # Legacy React application (deprecated)
 ```
 
 ## Deployment
