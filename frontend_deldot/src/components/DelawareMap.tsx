@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import * as d3 from 'd3';
 import { DE_COUNTIES } from '../types/policy';
 
@@ -10,6 +10,7 @@ interface DelawareMapProps {
 
 export default function DelawareMap({ data, title, unit = '$' }: DelawareMapProps) {
   const svgRef = useRef<SVGSVGElement>(null);
+  const [hoverInfo, setHoverInfo] = useState<{ name: string; value: number; x: number; y: number } | null>(null);
 
   useEffect(() => {
     if (!svgRef.current) return;
@@ -44,8 +45,14 @@ export default function DelawareMap({ data, title, unit = '$' }: DelawareMapProp
       .on('mouseover', function(event, d) {
         d3.select(this).attr('opacity', 0.8);
       })
+      .on('mousemove', function(event, d) {
+        const [x, y] = d3.pointer(event, svg.node());
+        const rect = svgRef.current!.getBoundingClientRect();
+        setHoverInfo({ name: d.name, value: data[d.id] || 0, x: rect.left + x, y: rect.top + y });
+      })
       .on('mouseout', function() {
         d3.select(this).attr('opacity', 1);
+        setHoverInfo(null);
       });
 
     // Labels
@@ -68,9 +75,18 @@ export default function DelawareMap({ data, title, unit = '$' }: DelawareMapProp
   }, [data, unit]);
 
   return (
-    <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 flex flex-col items-center">
+    <div className="relative bg-white p-6 rounded-xl shadow-sm border border-gray-100 flex flex-col items-center">
       <h3 className="text-sm font-bold text-gray-900 mb-4 uppercase tracking-wider">{title}</h3>
       <svg ref={svgRef} width="300" height="500" viewBox="0 0 300 500"></svg>
+      {hoverInfo && (
+        <div
+          className="pointer-events-none absolute z-20 rounded-lg bg-gray-900 text-white text-xs p-2 shadow-lg"
+          style={{ left: hoverInfo.x + 16, top: hoverInfo.y + 16, minWidth: 140 }}
+        >
+          <div className="font-bold">{hoverInfo.name}</div>
+          <div>{unit}{hoverInfo.value.toFixed(0)} / vehicle</div>
+        </div>
+      )}
       <div className="mt-4 flex gap-4 text-[10px] text-gray-500">
         <div className="flex items-center gap-1">
           <div className="w-3 h-3 bg-blue-100"></div>

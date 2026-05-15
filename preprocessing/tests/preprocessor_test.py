@@ -33,3 +33,22 @@ def test_preprocessor_fit_transform(dirty_data):
     assert df.iloc[2, 0] == 0.0 # The imputed mean (30) becomes 0 after scaling
     
     assert df['cat__Country_USA'].iloc[3] == 1.0
+
+
+def test_clean_data_filters_duplicate_vins_and_state_scope():
+    """Tests duplicate VIN removal and in-state filtering for registration data."""
+    raw = pd.DataFrame({
+        'VIN': ['AAA111', 'BBB222', 'AAA111', 'CCC333'],
+        'State': ['DE', 'MD', 'de', 'PA'],
+        'Make': ['Ford', 'Chevy', 'Ford', 'Tesla'],
+        'Model': ['F-150', 'Silverado', 'F-150', 'Model 3'],
+    })
+
+    preprocessor = DataPreprocessor()
+    cleaned = preprocessor.clean_data(raw)
+
+    assert cleaned.shape[0] == 1
+    assert cleaned['VIN'].tolist() == ['AAA111']
+    assert cleaned['State'].tolist() == ['DE']
+    assert 'PA' not in cleaned['State'].values
+    assert cleaned['VIN'].duplicated().sum() == 0

@@ -76,7 +76,42 @@ class DataPreprocessor:
             X_processed = X_processed.todense()
         
         # Return a DataFrame with the correct feature names
-        return pd.DataFrame( X_processed,  columns=self.feature_names_out_, index=X.index)
+        return pd.DataFrame(X_processed, columns=self.feature_names_out_, index=X.index)
+
+    def clean_data(
+        self,
+        X: pd.DataFrame,
+        vin_column: str = "VIN",
+        state_column: str = "State",
+        allowed_states=None,
+    ) -> pd.DataFrame:
+        """
+        Cleans raw registration data before fitting or transforming.
+
+        This method performs two required cleaning steps:
+        1. Remove duplicate vehicle records by VIN.
+        2. Keep only registration rows whose state is inside the allowed scope.
+
+        Args:
+            X: The raw registration DataFrame.
+            vin_column: Column name for the vehicle identifier.
+            state_column: Column name for the registration state.
+            allowed_states: A list of allowed state codes. Defaults to ["DE"].
+        """
+        if allowed_states is None:
+            allowed_states = ["DE"]
+
+        if vin_column not in X.columns:
+            raise KeyError(f"VIN column '{vin_column}' not found in input data.")
+        if state_column not in X.columns:
+            raise KeyError(f"State column '{state_column}' not found in input data.")
+
+        cleaned = X.drop_duplicates(subset=[vin_column], keep="first").copy()
+        cleaned[state_column] = cleaned[state_column].astype(str).str.upper()
+        allowed_states_normalized = [str(s).upper() for s in allowed_states]
+        cleaned = cleaned[cleaned[state_column].isin(allowed_states_normalized)].reset_index(drop=True)
+
+        return cleaned
 
     def fit_transform(self, X: pd.DataFrame) -> pd.DataFrame:
         """
