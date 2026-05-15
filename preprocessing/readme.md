@@ -20,6 +20,12 @@ For larger datasets (50G, 100G, ...) we would need to parallelize the pipeline a
 
   * Encoding: Applies OneHotEncoder to all categorical features.
 
+* **Registration Cleaning:**
+
+  * Removes duplicate records by VIN.
+
+  * Filters registrations to the in-state scope (default `DE`).
+
 
 # How to Use
 `uv` users:
@@ -43,6 +49,9 @@ from preprocessing.utils.save_to_file import save_processed_data
 #initialize the object
 preprocessor = DataPreprocessor()
 
+# clean raw registrations before fitting or transforming
+# df = load_data("registrations.csv")
+# df = preprocessor.clean_data(df, vin_column="VIN", state_column="State", allowed_states=["DE"])
 ```
 
 2. Loading data
