@@ -72,6 +72,7 @@ The system consists of three main components:
    ```bash
    # Using uv
    uv pip install -e .
+   pip install geopandas matplotlib folium pandas
 
    # Or using pip
    pip install -e .
@@ -88,7 +89,11 @@ The system consists of three main components:
    ```bash
    npm install
    ```
-
+3. Install system requirements, including the matching D3 packages:
+   ```bash
+   npm install d3 lucide-react re-charts motion
+   npm install --save-dev @types/d3
+   ```
 ## Running Locally
 
 ### Backend
@@ -102,7 +107,16 @@ python -c "from preprocessing.preprocessor import DataPreprocessor; # ... your c
 # Run the model
 python Model/DelDot1.py
 ```
+Backend Data & Maps Processing
+Execute Python scripts directly to process forecasting data or to regenerate spatial vector maps:
 
+```bash
+# Run forecasting model
+python Model/DelDot1.py
+
+# Run the GIS Script to refresh frontend maps and GeoJSON targets
+python scripts/generate_maps.py
+```
 ### Frontend
 
 1. Set up environment variables (see [Environment Variables](#environment-variables))
@@ -162,6 +176,10 @@ deldot_revenue_forecast/
 │   │   │   ├── Login.tsx         # Authentication component
 │   │   │   ├── ReportView.tsx    # Report generation
 │   │   │   └── RevenueChart.tsx  # Revenue visualizations
+│   |   ├── public/               # Asset build targets (Crucial for GIS maps)
+│   │   │   ├── delaware_counties.geojson # Loaded by DelawareMap.tsx via D3
+│   │   │   ├── delaware_map.html         # Embeddable interactive Folium frame
+│   │   │   └── delaware_cost_map.svg     # Pre-rendered static image asset
 │   │   ├── types/                # TypeScript type definitions
 │   │   │   ├── data.ts           # Data interfaces
 │   │   │   └── policy.ts         # Policy-related types
@@ -170,6 +188,8 @@ deldot_revenue_forecast/
 │   │   └── index.css             # Global styles
 ├── Model/                        # Machine learning models
 │   └── DelDot1.py                # Main forecasting model
+├── notebooks/                    # Machine learning models
+│   └── map_anaylsis.ipynb        # Script for generating interactive geo maps
 ├── preprocessing/                # Data preprocessing package
 │   ├── __init__.py
 │   ├── preprocessor.py           # Main preprocessing class
