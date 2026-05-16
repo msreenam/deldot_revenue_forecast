@@ -37,7 +37,7 @@ print(f"Rows after removing NaN: {len(data_cleaned)}")
 label_encoders = {}
 for column in data_cleaned.select_dtypes(include='object').columns:
     le = LabelEncoder()
-    data_cleaned[column] = le.fit_transform(data_cleaned[column].astype(str))
+    data_cleaned[column] = le.fit_transform(data_cleaned[column].astype(str)) # type: ignore
     label_encoders[column] = le
     print(f"Encoded column: {column}")
 
